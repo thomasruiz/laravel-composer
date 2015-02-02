@@ -1,8 +1,6 @@
 <?php namespace LaravelComposer\Receipes;
 
 use LaravelComposer\Composer;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 interface Receipe
 {
