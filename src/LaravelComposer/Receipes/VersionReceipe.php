@@ -5,7 +5,6 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
-use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 class VersionReceipe implements Receipe
@@ -62,18 +61,60 @@ class VersionReceipe implements Receipe
      */
     public function handle(Composer $composer, $result)
     {
-        $command = "composer create-project laravel/laravel {$this->input->getArgument('appName')} $result";
-        $composer->info("Running $command...");
+        $this->runCreateProject($composer, $result, $appName = $this->input->getArgument('appName'));
 
-        $process = new Process($command);
-        $process->run(function ($type, $buffer) {
-            $this->output->write($buffer);
-        });
+        chdir($appName);
 
-        if (!$process->isSuccessful()) {
-            throw new RuntimeException('Composer failed. Did you install it?');
+        if ($result !== '4.2') {
+            $this->runArtisanAppName($composer, $appName);
         }
 
         return true;
+    }
+
+    /**
+     * Run `composer create-project...` to retrieve the laravel template.
+     *
+     * @param Composer $composer
+     * @param string   $result
+     * @param string   $appName
+     *
+     * @throws \RuntimeException
+     */
+    protected function runCreateProject(Composer $composer, $result, $appName)
+    {
+        $command = "composer create-project laravel/laravel $appName $result --prefer-dist";
+        $composer->info("Running $command...");
+
+        $process = new Process($command);
+        $process->setTimeout(0);
+        $process->run(
+            function ($type, $buffer) {
+                $this->output->write($buffer);
+            }
+        );
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException();
+        }
+    }
+
+    /**
+     * Change the application namespaces with `artisan app:name`
+     *
+     * @param Composer $composer
+     * @param string   $appName
+     */
+    protected function runArtisanAppName(Composer $composer, $appName)
+    {
+        $command = "php artisan app:name $appName";
+        $composer->info("Changing your application name");
+
+        $process = new Process($command);
+        $process->run(
+            function ($type, $buffer) {
+                $this->output->write($buffer);
+            }
+        );
     }
 }
