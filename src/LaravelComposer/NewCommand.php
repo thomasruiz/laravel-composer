@@ -1,6 +1,8 @@
 <?php namespace LaravelComposer;
 
+use LaravelComposer\Receipes\VersionReceipe;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -11,7 +13,11 @@ class NewCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('new');
+        $this->setName('new')->setDescription('Create a new laravel project.')->addArgument(
+            'appName',
+            InputArgument::REQUIRED,
+            'Your application name'
+        );
     }
 
     /**
@@ -24,8 +30,10 @@ class NewCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $composer = new Composer;
+        $composer = new Composer($input, $output);
 
-        $composer->run($input, $output);
+        $composer->addReceipe(new VersionReceipe($this->getHelper('question'), $input, $output));
+
+        $composer->run();
     }
 }

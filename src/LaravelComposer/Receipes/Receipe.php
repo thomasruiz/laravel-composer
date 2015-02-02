@@ -10,12 +10,9 @@ interface Receipe
     /**
      * Run the receipe.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @return string|bool
      */
-    public function run(InputInterface $input, OutputInterface $output);
+    public function run();
 
     /**
      * Handle the result. Return false if the composer should stop.
