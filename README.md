@@ -1,13 +1,13 @@
-= Laravel Composer
+# Laravel Composer
 An elegant laravel project generator.
 
-== Installation
+## Installation
 
 ```
 composer global require laravel-composer/laravel-composer
 ```
 
-== Usage
+## Usage
 
 ```
 laravel-composer new MyApp
