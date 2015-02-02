@@ -1,0 +1,22 @@
+{
+  "name": "thomasruiz/laravel-composer",
+  "description": "A laravel project generator",
+  "require": {
+    "symfony/console": "~2.6"
+  },
+  "authors": [
+    {
+      "name": "Thomas Ruiz",
+      "email": "contact@thomasruiz.eu"
+    }
+  ],
+  "minimum-stability": "dev",
+  "bin": [
+    "laravel-composer"
+  ],
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  }
+}
