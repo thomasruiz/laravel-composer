@@ -21,6 +21,11 @@ class VersionReceipe implements Receipe
     private $output;
 
     /**
+     * @var QuestionHelper
+     */
+    private $helper;
+
+    /**
      * Construct a new VersionReceipe object
      *
      * @param QuestionHelper  $helper
