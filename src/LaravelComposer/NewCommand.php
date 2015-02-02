@@ -24,5 +24,8 @@ class NewCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $composer = new Composer;
+
+        $composer->run($input, $output);
     }
 }
