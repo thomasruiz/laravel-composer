@@ -62,37 +62,10 @@ class ORMReceipe implements Receipe
     public function handle(Composer $composer, $result)
     {
         if ($result !== 'Eloquent') {
-            if ($composer->getLaravelVersion()[0] === '4') {
-                $this->handleV4($composer);
-            } else {
-                $this->handleV5($composer);
-            }
-
-            $composer->addProvider('Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider');
-            $composer->addAlias('EntityManager', 'Mitch\LaravelDoctrine\EntityManagerFacade');
+            $class = '\LaravelComposer\Receipes\ORMReceipes\\'.$result.'Receipe';
+            $composer->addReceipe(new $class($this->input, $this->output));
         }
 
         return true;
-    }
-
-    /**
-     * @param Composer $composer
-     */
-    public function handleV4(Composer $composer)
-    {
-        $composer->addDependency('mitchellvanw/laravel-doctrine', '0.5.*');
-
-        $composer->runCommand(
-            'php artisan config:publish mitch/laravel-doctrine --path=vendor/mitch/laravel-doctrine/config'
-        );
-    }
-
-    /**
-     * @param Composer $composer
-     */
-    public function handleV5(Composer $composer)
-    {
-        $composer->addDependency('mitchellvanw/laravel-doctrine', 'dev-develop');
-        copy('vendor/mitchellvanw/laravel-doctrine/config/doctrine.php', 'config/doctrine.php');
     }
 }
