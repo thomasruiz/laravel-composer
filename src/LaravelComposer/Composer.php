@@ -20,6 +20,11 @@ class Composer
     private $laravelVersion;
 
     /**
+     * @var int
+     */
+    private $currentReceipeOffset = 0;
+
+    /**
      * Construct a new Composer object
      *
      * @param InputInterface  $input
@@ -33,19 +38,22 @@ class Composer
 
     /**
      * Run all receipes.
+     *
+     * @param int $currentIndex
+     *
+     * @return bool
      */
-    public function run()
+    public function run($currentIndex = 0)
     {
-        array_walk(
-            $this->receipes,
-            function (Receipe $receipe) {
-                $result = $receipe->run($this->input, $this->output);
+        $nextIndex = $currentIndex + 1;
 
-                if ($receipe->handle($this, $result) === false) {
-                    return;
-                }
-            }
-        );
+        $this->currentReceipeOffset = $nextIndex;
+
+        $result = $this->receipes[ $currentIndex ]->run($this->input, $this->output);
+
+        if ($this->receipes[ $currentIndex ]->handle($this, $result) === true) {
+            isset( $this->receipes[ $nextIndex ] ) && $this->run($nextIndex);
+        }
     }
 
     /**
@@ -55,7 +63,7 @@ class Composer
      */
     public function addReceipe(Receipe $receipe)
     {
-        $this->receipes[] = $receipe;
+        array_splice($this->receipes, $this->currentReceipeOffset++, 0, [ $receipe ]);
     }
 
     /**
