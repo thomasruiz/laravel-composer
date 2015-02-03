@@ -61,7 +61,7 @@ class ConfiguratorReceipe implements Receipe
     public function handle(Composer $composer, $result)
     {
         if ($result) {
-            // Add different receipes
+            $composer->addReceipe(new ORMReceipe($this->helper, $this->input, $this->output));
 
             return true;
         }
