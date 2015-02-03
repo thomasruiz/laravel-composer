@@ -67,6 +67,9 @@ class ORMReceipe implements Receipe
             } else {
                 $this->handleV5($composer);
             }
+
+            $composer->addProvider('Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider');
+            $composer->addAlias('EntityManager', 'Mitch\LaravelDoctrine\EntityManagerFacade');
         }
 
         return true;
@@ -82,9 +85,6 @@ class ORMReceipe implements Receipe
         $composer->runCommand(
             'php artisan config:publish mitch/laravel-doctrine --path=vendor/mitch/laravel-doctrine/config'
         );
-
-        $composer->addProvider('Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider');
-        $composer->addAlias('EntityManager', 'Mitch\LaravelDoctrine\EntityManagerFacade');
     }
 
     /**
@@ -94,7 +94,5 @@ class ORMReceipe implements Receipe
     {
         $composer->addDependency('mitchellvanw/laravel-doctrine', 'dev-develop');
         copy('vendor/mitchellvanw/laravel-doctrine/config/doctrine.php', 'config/doctrine.php');
-        $composer->addProvider('Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider');
-        $composer->addAlias('EntityManager', 'Mitch\LaravelDoctrine\EntityManagerFacade');
     }
 }
