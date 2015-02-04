@@ -1,6 +1,7 @@
 <?php namespace LaravelComposer\Receipes;
 
 use LaravelComposer\Composer;
+use LaravelComposer\Receipes\Packages\ORMReceipe;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

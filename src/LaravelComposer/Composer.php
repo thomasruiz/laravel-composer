@@ -25,6 +25,11 @@ class Composer
     private $currentReceipeOffset = 0;
 
     /**
+     * @var string
+     */
+    private $appName;
+
+    /**
      * Construct a new Composer object
      *
      * @param InputInterface  $input
@@ -170,6 +175,21 @@ class Composer
     }
 
     /**
+     * @param string $stubName
+     *
+     * @return string
+     */
+    public function stub($stubName)
+    {
+        $path     = __DIR__ . '/../../stubs/' . $stubName . '.php';
+
+        $contents = file_get_contents($path);
+        file_put_contents($path, str_replace('__NAMESPACE__', $this->getAppName(), $contents));
+
+        return $path;
+    }
+
+    /**
      * @param string $result
      */
     public function setLaravelVersion($result)
@@ -191,5 +211,21 @@ class Composer
     public function getConfigDir()
     {
         return $this->laravelVersion[0] === '4' ? "app/config/" : "config/";
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppName()
+    {
+        return $this->appName;
+    }
+
+    /**
+     * @param string $appName
+     */
+    public function setAppName($appName)
+    {
+        $this->appName = $appName;
     }
 }

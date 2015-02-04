@@ -1,4 +1,4 @@
-<?php namespace LaravelComposer\Receipes\ORMReceipes;
+<?php namespace LaravelComposer\Receipes\Packages\ORMReceipes;
 
 use LaravelComposer\Composer;
 use LaravelComposer\Receipes\Receipe;
@@ -50,6 +50,8 @@ class DoctrineReceipe implements Receipe
      */
     public function handle(Composer $composer, $result)
     {
+        mkdir('app/Entities');
+
         if ($composer->getLaravelVersion()[0] === '4') {
             $this->handleV4($composer);
         } else {
@@ -59,7 +61,6 @@ class DoctrineReceipe implements Receipe
         $composer->addProvider('Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider');
         $composer->addAlias('EntityManager', 'Mitch\LaravelDoctrine\EntityManagerFacade');
     }
-
 
     /**
      * @param Composer $composer
@@ -80,6 +81,10 @@ class DoctrineReceipe implements Receipe
     {
         $composer->addDependency('mitchellvanw/laravel-doctrine', 'dev-develop');
 
-        copy('vendor/mitchellvanw/laravel-doctrine/config/doctrine.php', 'config/doctrine.php');
+        $config = file_get_contents('vendor/mitchellvanw/laravel-doctrine/config/doctrine.php');
+        file_put_contents('config/doctrine.php', str_replace('// Paths to entities here...', 'app/Entities/', $config));
+        unlink('app/User.php');
+        copy($composer->stub('V5/Doctrine/Entity'), 'app/Entities/Entity.php');
+        copy($composer->stub('V5/Doctrine/User'), 'app/Entities/User.php');
     }
 }

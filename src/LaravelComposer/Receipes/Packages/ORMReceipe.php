@@ -1,6 +1,7 @@
-<?php namespace LaravelComposer\Receipes;
+<?php namespace LaravelComposer\Receipes\Packages;
 
 use LaravelComposer\Composer;
+use LaravelComposer\Receipes\Receipe;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -62,7 +63,7 @@ class ORMReceipe implements Receipe
     public function handle(Composer $composer, $result)
     {
         if ($result !== 'Eloquent') {
-            $class = '\LaravelComposer\Receipes\ORMReceipes\\'.$result.'Receipe';
+            $class = '\LaravelComposer\Receipes\Packages\ORMReceipes\\' . $result . 'Receipe';
             $composer->addReceipe(new $class($this->input, $this->output));
         }
 

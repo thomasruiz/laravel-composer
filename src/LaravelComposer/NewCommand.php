@@ -37,6 +37,7 @@ class NewCommand extends Command
         $composer->addReceipe(new VersionReceipe($questionHelper, $input, $output));
         $composer->addReceipe(new ConfiguratorReceipe($questionHelper, $input, $output));
 
+        $composer->setAppName($input->getArgument('appName'));
         $composer->run();
     }
 }

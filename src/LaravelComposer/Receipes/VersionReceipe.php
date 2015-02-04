@@ -65,7 +65,7 @@ class VersionReceipe implements Receipe
      */
     public function handle(Composer $composer, $result)
     {
-        $appName = $this->input->getArgument('appName');
+        $appName = $composer->getAppName();
         $composer->runCommand("composer create-project laravel/laravel $appName $result --prefer-dist");
 
         chdir($appName);
