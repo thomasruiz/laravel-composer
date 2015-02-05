@@ -81,12 +81,42 @@ class DoctrineReceipe implements Receipe
     {
         $composer->addDependency('mitchellvanw/laravel-doctrine', 'dev-develop');
 
-        $config = file_get_contents('vendor/mitchellvanw/laravel-doctrine/config/doctrine.php');
-        $config = str_replace('// Paths to entities here...', "'app/Entities/',", $config);
-        file_put_contents('config/doctrine.php', $config);
+        $configPath = $composer->getConfigDir();
+        $this->addDoctrineConfig($configPath, 'app/Entities/');
+        $this->changeAuthConfig($configPath);
 
         unlink('app/User.php');
         copy($composer->stub('V5/Doctrine/Entity'), 'app/Entities/Entity.php');
         copy($composer->stub('V5/Doctrine/User'), 'app/Entities/User.php');
+        copy($composer->stub('V5/Doctrine/Registrar'), 'app/Services/Registrar.php');
+    }
+
+    /**
+     * @param string $configPath
+     */
+    public function changeAuthConfig($configPath)
+    {
+        $auth = file_get_contents("$configPath/auth.php");
+
+        $auth = str_replace(
+            [ "'driver' => 'eloquent'", "'model' => 'mynewapp\\User'" ],
+            [ "'driver' => 'doctrine'", "'model' => 'mynewapp\\Entities\\User'" ],
+            $auth
+        );
+
+        file_put_contents('config/auth.php', $auth);
+    }
+
+    /**
+     * @param string $configPath
+     * @param string $pathToEntities
+     */
+    public function addDoctrineConfig($configPath, $pathToEntities)
+    {
+        $config = file_get_contents('vendor/mitchellvanw/laravel-doctrine/config/doctrine.php');
+
+        $config = str_replace('// Paths to entities here...', "'$pathToEntities',", $config);
+
+        file_put_contents("$configPath/doctrine.php", $config);
     }
 }
