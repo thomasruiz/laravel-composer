@@ -82,7 +82,9 @@ class DoctrineReceipe implements Receipe
         $composer->addDependency('mitchellvanw/laravel-doctrine', 'dev-develop');
 
         $config = file_get_contents('vendor/mitchellvanw/laravel-doctrine/config/doctrine.php');
-        file_put_contents('config/doctrine.php', str_replace('// Paths to entities here...', 'app/Entities/', $config));
+        $config = str_replace('// Paths to entities here...', "'app/Entities/',", $config);
+        file_put_contents('config/doctrine.php', $config);
+
         unlink('app/User.php');
         copy($composer->stub('V5/Doctrine/Entity'), 'app/Entities/Entity.php');
         copy($composer->stub('V5/Doctrine/User'), 'app/Entities/User.php');
