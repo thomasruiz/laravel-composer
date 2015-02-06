@@ -88,6 +88,7 @@ class DoctrineReceipe implements Receipe
         unlink('app/User.php');
         copy($composer->stub('V5/Doctrine/Entity'), 'app/Entities/Entity.php');
         copy($composer->stub('V5/Doctrine/User'), 'app/Entities/User.php');
+        copy($composer->stub('V5/Doctrine/PasswordReset'), 'app/Entities/PasswordReset.php');
         copy($composer->stub('V5/Doctrine/Registrar'), 'app/Services/Registrar.php');
     }
 
