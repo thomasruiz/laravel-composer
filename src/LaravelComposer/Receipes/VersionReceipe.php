@@ -48,7 +48,6 @@ class VersionReceipe implements Receipe
         $choices  = [
             '4.2',
             '5.0',
-            'dev-develop'
         ];
         $question = new ChoiceQuestion("What version of laravel do you need? [default: 5.0]", $choices, 1);
 
