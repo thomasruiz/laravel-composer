@@ -45,10 +45,7 @@ class VersionReceipe implements Receipe
      */
     public function run()
     {
-        $choices  = [
-            '4.2',
-            '5.0',
-        ];
+        $choices  = [ '4.2', '5.0' ];
         $question = new ChoiceQuestion("What version of laravel do you need? [default: 5.0]", $choices, 1);
 
         return $this->helper->ask($this->input, $this->output, $question);

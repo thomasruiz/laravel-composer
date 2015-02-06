@@ -64,7 +64,7 @@ class ORMReceipe implements Receipe
     {
         if ($result !== 'Eloquent') {
             $class = '\LaravelComposer\Receipes\Packages\ORMReceipes\\' . $result . 'Receipe';
-            $composer->addReceipe(new $class($this->input, $this->output));
+            $composer->addReceipe(new $class($this->questionHelper, $this->input, $this->output));
         }
 
         return true;
