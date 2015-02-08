@@ -1,4 +1,4 @@
-<?php namespace mynewapp\Entities;
+<?php namespace __NAMESPACE__\Entities;
 
 abstract class Entity
 {

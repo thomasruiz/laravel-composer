@@ -1,4 +1,4 @@
-<?php namespace mynewapp\Entities;
+<?php namespace __NAMESPACE__\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;

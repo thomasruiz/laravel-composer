@@ -1,4 +1,4 @@
-<?php namespace mynewapp\Services;
+<?php namespace __NAMESPACE__\Services;
 
 use EntityManager;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
