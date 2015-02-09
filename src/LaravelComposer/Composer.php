@@ -181,12 +181,28 @@ class Composer
      */
     public function stub($stubName)
     {
-        $path     = __DIR__ . '/../../stubs/' . $stubName . '.php';
+        $version = $this->getLaravelVersion()[0] === '4' ? 'V4' : 'V5';
+        $source  = __DIR__ . '/../../stubs/' . $version . '/' . $stubName . '.php';
+        $target  = __DIR__ . '/../../build/' . $version . '/' . $stubName . '.php';
 
-        $contents = file_get_contents($path);
-        file_put_contents($path, str_replace('__NAMESPACE__', $this->getAppName(), $contents));
+        $this->buildStub($source, $target);
 
-        return $path;
+        return $target;
+    }
+
+    /**
+     * @param $source
+     * @param $target
+     */
+    private function buildStub($source, $target)
+    {
+        $targetDirectory = substr($target, 0, strrpos($target, '/'));
+        if (!is_dir($targetDirectory)) {
+            mkdir($targetDirectory, 0755, true);
+        }
+
+        $contents = file_get_contents($source);
+        file_put_contents($target, str_replace('__NAMESPACE__', $this->getAppName(), $contents));
     }
 
     /**

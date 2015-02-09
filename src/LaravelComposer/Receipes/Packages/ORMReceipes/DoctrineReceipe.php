@@ -61,8 +61,6 @@ class DoctrineReceipe implements Receipe
      */
     public function handle(Composer $composer, $result)
     {
-        mkdir('app/Entities');
-
         if ($composer->getLaravelVersion()[0] === '4') {
             $this->handleV4($composer);
         } else {
@@ -96,6 +94,8 @@ class DoctrineReceipe implements Receipe
      */
     public function handleV5(Composer $composer)
     {
+        mkdir('app/Entities', 0755);
+
         $composer->addDependency('mitchellvanw/laravel-doctrine', 'dev-develop');
 
         $configPath = $composer->getConfigDir();
@@ -103,10 +103,10 @@ class DoctrineReceipe implements Receipe
         $this->changeAuthConfig($configPath);
 
         unlink('app/User.php');
-        copy($composer->stub('V5/Doctrine/Entity'), 'app/Entities/Entity.php');
-        copy($composer->stub('V5/Doctrine/User'), 'app/Entities/User.php');
-        copy($composer->stub('V5/Doctrine/PasswordReset'), 'app/Entities/PasswordReset.php');
-        copy($composer->stub('V5/Doctrine/Registrar'), 'app/Services/Registrar.php');
+        copy($composer->stub('Doctrine/Entity'), 'app/Entities/Entity.php');
+        copy($composer->stub('Doctrine/User'), 'app/Entities/User.php');
+        copy($composer->stub('Doctrine/PasswordReset'), 'app/Entities/PasswordReset.php');
+        copy($composer->stub('Doctrine/Registrar'), 'app/Services/Registrar.php');
     }
 
     /**
