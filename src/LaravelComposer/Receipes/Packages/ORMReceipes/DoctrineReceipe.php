@@ -80,7 +80,7 @@ class DoctrineReceipe implements Receipe
     /**
      * @param Composer $composer
      */
-    public function handleV4(Composer $composer)
+    private function handleV4(Composer $composer)
     {
         $composer->addDependency('mitchellvanw/laravel-doctrine', '0.5.*');
 
@@ -92,7 +92,7 @@ class DoctrineReceipe implements Receipe
     /**
      * @param Composer $composer
      */
-    public function handleV5(Composer $composer)
+    private function handleV5(Composer $composer)
     {
         mkdir('app/Entities', 0755);
 
@@ -112,7 +112,7 @@ class DoctrineReceipe implements Receipe
     /**
      * @param string $configPath
      */
-    public function changeAuthConfig($configPath)
+    private function changeAuthConfig($configPath)
     {
         $auth = file_get_contents("$configPath/auth.php");
 
@@ -129,7 +129,7 @@ class DoctrineReceipe implements Receipe
      * @param string $configPath
      * @param string $pathToEntities
      */
-    public function addDoctrineConfig($configPath, $pathToEntities)
+    private function addDoctrineConfig($configPath, $pathToEntities)
     {
         $config = file_get_contents('vendor/mitchellvanw/laravel-doctrine/config/doctrine.php');
 
