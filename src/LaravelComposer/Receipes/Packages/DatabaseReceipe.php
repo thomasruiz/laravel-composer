@@ -1,11 +1,11 @@
-<?php namespace LaravelComposer\Receipes;
+<?php namespace LaravelComposer\Receipes\Packages;
 
 use LaravelComposer\Composer;
-use LaravelComposer\Receipes\Packages\DatabaseReceipe;
-use LaravelComposer\Receipes\Packages\ORMReceipe;
+use LaravelComposer\Receipes\AbstractReceipe;
+use LaravelComposer\Receipes\Packages\DatabaseReceipes\DatabaseConfiguratorReceipe;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-class ConfiguratorReceipe extends AbstractReceipe
+class DatabaseReceipe extends AbstractReceipe
 {
 
     /**
@@ -15,7 +15,7 @@ class ConfiguratorReceipe extends AbstractReceipe
      */
     public function run()
     {
-        $question = new ConfirmationQuestion('Would you like to configure your new application? (Y/n) ');
+        $question = new ConfirmationQuestion("Do you want to configure the database? (Y/n) ");
 
         return $this->helper->ask($this->input, $this->output, $question);
     }
@@ -31,12 +31,9 @@ class ConfiguratorReceipe extends AbstractReceipe
     public function handle(Composer $composer, $result)
     {
         if ($result) {
-            $composer->addReceipe(new ORMReceipe($this->helper, $this->input, $this->output));
-            $composer->addReceipe(new DatabaseReceipe($this->helper, $this->input, $this->output));
-
-            return true;
+            $composer->addReceipe(new DatabaseConfiguratorReceipe($this->helper, $this->input, $this->output));
         }
 
-        return false;
+        return true;
     }
 }

@@ -1,43 +1,10 @@
 <?php namespace LaravelComposer\Receipes\Packages\ORMReceipes;
 
 use LaravelComposer\Composer;
-use LaravelComposer\Receipes\Receipe;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
+use LaravelComposer\Receipes\AbstractReceipe;
 
-class DoctrineReceipe implements Receipe
+class DoctrineReceipe extends AbstractReceipe
 {
-
-    /**
-     * @var InputInterface
-     */
-    private $input;
-
-    /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    /**
-     * @var QuestionHelper
-     */
-    private $questionHelper;
-
-    /**
-     * Construct a new DoctrineReceipe object
-     *
-     * @param QuestionHelper  $questionHelper
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    public function __construct(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output)
-    {
-        $this->questionHelper = $questionHelper;
-        $this->input          = $input;
-        $this->output         = $output;
-    }
 
     /**
      * Run the receipe.
@@ -46,9 +13,7 @@ class DoctrineReceipe implements Receipe
      */
     public function run()
     {
-        $question = new ConfirmationQuestion('Would you like us to generate the database for you? (Y/n) ');
-
-        return $this->questionHelper->ask($this->input, $this->output, $question);
+        return true;
     }
 
     /**
@@ -69,10 +34,6 @@ class DoctrineReceipe implements Receipe
 
         $composer->addProvider('Mitch\LaravelDoctrine\LaravelDoctrineServiceProvider');
         $composer->addAlias('EntityManager', 'Mitch\LaravelDoctrine\EntityManagerFacade');
-
-        if ($result) {
-            $composer->runCommand('php artisan doctrine:schema:create');
-        }
 
         return true;
     }

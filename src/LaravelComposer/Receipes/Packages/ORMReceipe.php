@@ -1,43 +1,11 @@
 <?php namespace LaravelComposer\Receipes\Packages;
 
 use LaravelComposer\Composer;
-use LaravelComposer\Receipes\Receipe;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use LaravelComposer\Receipes\AbstractReceipe;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
-class ORMReceipe implements Receipe
+class ORMReceipe extends AbstractReceipe
 {
-
-    /**
-     * @var InputInterface
-     */
-    private $input;
-
-    /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    /**
-     * @var QuestionHelper
-     */
-    private $questionHelper;
-
-    /**
-     * Construct a new ORMReceipe object
-     *
-     * @param QuestionHelper  $questionHelper
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    public function __construct(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output)
-    {
-        $this->questionHelper = $questionHelper;
-        $this->input          = $input;
-        $this->output         = $output;
-    }
 
     /**
      * Run the receipe.
@@ -49,7 +17,7 @@ class ORMReceipe implements Receipe
         $choices  = [ 'Eloquent', 'Doctrine' ];
         $question = new ChoiceQuestion('Which ORM would you like to use? [default: Eloquent]', $choices, $choices[0]);
 
-        return $this->questionHelper->ask($this->input, $this->output, $question);
+        return $this->helper->ask($this->input, $this->output, $question);
     }
 
     /**
@@ -64,7 +32,7 @@ class ORMReceipe implements Receipe
     {
         if ($result !== 'Eloquent') {
             $class = '\LaravelComposer\Receipes\Packages\ORMReceipes\\' . $result . 'Receipe';
-            $composer->addReceipe(new $class($this->questionHelper, $this->input, $this->output));
+            $composer->addReceipe(new $class($this->helper, $this->input, $this->output));
         }
 
         return true;
