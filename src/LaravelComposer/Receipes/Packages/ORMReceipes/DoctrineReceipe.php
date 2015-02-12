@@ -84,9 +84,12 @@ class DoctrineReceipe implements Receipe
     {
         $composer->addDependency('mitchellvanw/laravel-doctrine', '0.5.*');
 
-        $composer->runCommand(
-            'php artisan config:publish mitch/laravel-doctrine --path=vendor/mitch/laravel-doctrine/config'
-        );
+        $configPath = $composer->getConfigDir();
+        $this->addDoctrineConfig($configPath, 'app/models/');
+        $this->changeAuthConfig($configPath, 'User', 'User');
+
+        copy($composer->stub('Doctrine/Entity'), 'app/models/Entity.php');
+        copy($composer->stub('Doctrine/User'), 'app/models/User.php');
     }
 
     /**
@@ -100,7 +103,7 @@ class DoctrineReceipe implements Receipe
 
         $configPath = $composer->getConfigDir();
         $this->addDoctrineConfig($configPath, 'app/Entities/');
-        $this->changeAuthConfig($configPath);
+        $this->changeAuthConfig($configPath, 'mynewapp\\User', 'mynewapp\\Entities\\User');
 
         unlink('app/User.php');
         copy($composer->stub('Doctrine/Entity'), 'app/Entities/Entity.php');
@@ -111,18 +114,20 @@ class DoctrineReceipe implements Receipe
 
     /**
      * @param string $configPath
+     * @param string $oldModel
+     * @param string $newModel
      */
-    private function changeAuthConfig($configPath)
+    private function changeAuthConfig($configPath, $oldModel, $newModel)
     {
         $auth = file_get_contents("$configPath/auth.php");
 
         $auth = str_replace(
-            [ "'driver' => 'eloquent'", "'model' => 'mynewapp\\User'" ],
-            [ "'driver' => 'doctrine'", "'model' => 'mynewapp\\Entities\\User'" ],
+            [ "'driver' => 'eloquent'", "'model' => '$oldModel'" ],
+            [ "'driver' => 'doctrine'", "'model' => '$newModel'" ],
             $auth
         );
 
-        file_put_contents('config/auth.php', $auth);
+        file_put_contents($configPath . '/auth.php', $auth);
     }
 
     /**
