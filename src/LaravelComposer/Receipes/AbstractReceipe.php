@@ -3,10 +3,11 @@
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 abstract class AbstractReceipe implements Receipe
 {
-
 
     /**
      * @var InputInterface
@@ -37,4 +38,22 @@ abstract class AbstractReceipe implements Receipe
         $this->output = $output;
     }
 
+    /**
+     * Ask a question.
+     *
+     * @param string        $question
+     * @param bool|string[] $choices
+     *
+     * @return string
+     */
+    protected function ask($question, $choices = true, $default = null)
+    {
+        if (is_bool($choices)) {
+            $question = new ConfirmationQuestion($question, $choices);
+        } else {
+            $question = new ChoiceQuestion($question, $choices, $default);
+        }
+
+        return $this->helper->ask($this->input, $this->output, $question);
+    }
 }

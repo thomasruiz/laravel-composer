@@ -1,7 +1,6 @@
 <?php namespace LaravelComposer\Receipes;
 
 use LaravelComposer\Composer;
-use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class VersionReceipe extends AbstractReceipe
 {
@@ -13,10 +12,7 @@ class VersionReceipe extends AbstractReceipe
      */
     public function run()
     {
-        $choices  = [ '4.2', '5.0' ];
-        $question = new ChoiceQuestion("What version of laravel do you need? [default: 5.0]", $choices, 1);
-
-        return $this->helper->ask($this->input, $this->output, $question);
+        return $this->ask('What version of laravel do you need? [default: 5.0]', [ '4.2', '5.0' ], 1);
     }
 
     /**

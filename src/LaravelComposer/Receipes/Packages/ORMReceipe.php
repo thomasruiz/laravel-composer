@@ -2,7 +2,6 @@
 
 use LaravelComposer\Composer;
 use LaravelComposer\Receipes\AbstractReceipe;
-use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class ORMReceipe extends AbstractReceipe
 {
@@ -14,10 +13,7 @@ class ORMReceipe extends AbstractReceipe
      */
     public function run()
     {
-        $choices  = [ 'Eloquent', 'Doctrine' ];
-        $question = new ChoiceQuestion('Which ORM would you like to use? [default: Eloquent]', $choices, $choices[0]);
-
-        return $this->helper->ask($this->input, $this->output, $question);
+        return $this->ask('Which ORM would you like to use? [default: Eloquent]', [ 'Eloquent', 'Doctrine' ], 0);
     }
 
     /**

@@ -3,7 +3,6 @@
 use LaravelComposer\Composer;
 use LaravelComposer\Receipes\Packages\DatabaseReceipe;
 use LaravelComposer\Receipes\Packages\ORMReceipe;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class ConfiguratorReceipe extends AbstractReceipe
 {
@@ -15,9 +14,7 @@ class ConfiguratorReceipe extends AbstractReceipe
      */
     public function run()
     {
-        $question = new ConfirmationQuestion('Would you like to configure your new application? (Y/n) ');
-
-        return $this->helper->ask($this->input, $this->output, $question);
+        return $this->ask('Would you like to configure your new application? (Y/n) ');
     }
 
     /**
