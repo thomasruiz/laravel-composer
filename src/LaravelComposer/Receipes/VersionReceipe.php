@@ -26,7 +26,7 @@ class VersionReceipe extends AbstractReceipe
     public function handle(Composer $composer, $result)
     {
         $appName = $composer->getAppName();
-        $composer->runCommand("composer create-project laravel/laravel $appName $result --prefer-dist");
+        $composer->runCommand("composer create-project laravel/laravel $appName ~$result --prefer-dist");
 
         chdir($appName);
 
