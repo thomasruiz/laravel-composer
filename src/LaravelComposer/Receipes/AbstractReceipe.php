@@ -5,6 +5,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 
 abstract class AbstractReceipe implements Receipe
 {
@@ -43,6 +44,7 @@ abstract class AbstractReceipe implements Receipe
      *
      * @param string        $question
      * @param bool|string[] $choices
+     * @param string        $default
      *
      * @return string
      */
@@ -50,6 +52,8 @@ abstract class AbstractReceipe implements Receipe
     {
         if (is_bool($choices)) {
             $question = new ConfirmationQuestion($question, $choices);
+        } elseif (is_string($choices)) {
+            $question = new Question($question, $choices);
         } else {
             $question = new ChoiceQuestion($question, $choices, $default);
         }
