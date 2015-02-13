@@ -2,6 +2,7 @@
 
 use LaravelComposer\Composer;
 use LaravelComposer\Recipes\Packages\DatabaseRecipe;
+use LaravelComposer\Recipes\Packages\HTMLRecipe;
 use LaravelComposer\Recipes\Packages\ORMRecipe;
 
 class ConfiguratorRecipe extends AbstractRecipe
@@ -30,6 +31,10 @@ class ConfiguratorRecipe extends AbstractRecipe
         if ($result) {
             $composer->addRecipe(new ORMRecipe($this->helper, $this->input, $this->output));
             $composer->addRecipe(new DatabaseRecipe($this->helper, $this->input, $this->output));
+
+            if ($composer->getLaravelVersion()[0] !== '4') {
+                $composer->addRecipe(new HTMLRecipe($this->helper, $this->input, $this->output));
+            }
 
             return true;
         }
