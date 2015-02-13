@@ -26,15 +26,20 @@ class VersionRecipe extends AbstractRecipe
     public function handle(Composer $composer, $result)
     {
         $appName = $composer->getAppName();
-        $composer->runCommand("composer create-project laravel/laravel $appName ~$result --prefer-dist");
+        $composer->runCommand("composer create-project laravel/laravel $appName ~$result --prefer-dist --no-scripts");
 
         chdir($appName);
 
         $composer->changeMinimumStability();
 
-        if ($result !== '4.2') {
+        if ($result[0] !== '4') {
+            $composer->runCommand("php -r \"copy('.env.example', '.env');\"");
+            $composer->runCommand("php artisan key:generate");
             $composer->runCommand("php artisan app:name $appName");
+        } else {
+            $composer->runCommand("php artisan key:generate");
         }
+
 
         $composer->setLaravelVersion($result);
 

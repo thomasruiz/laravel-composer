@@ -90,9 +90,10 @@ class Composer
     {
         $devOption = $dev ? '--dev' : null;
 
-        $command = "composer require $devOption --prefer-dist $package $version";
+        $command = "composer require $devOption --prefer-dist --no-update $package $version";
 
         $this->runCommand($command);
+        $this->runCommand("composer update --prefer-dist --no-scripts");
     }
 
     /**
