@@ -35,6 +35,11 @@ class Composer
     private $ORM;
 
     /**
+     * @var bool
+     */
+    private $databaseGeneration = false;
+
+    /**
      * Construct a new Composer object
      *
      * @param InputInterface  $input
@@ -178,6 +183,29 @@ class Composer
         }
 
         file_put_contents($file, $contents);
+    }
+
+    /**
+     * Allow the migrations to be ran.
+     */
+    public function allowDatabaseMigration()
+    {
+        $this->databaseGeneration = true;
+    }
+
+    /**
+     * Run the database migrate command depending of the orm.
+     */
+    public function migrateDatabase()
+    {
+        if ($this->databaseGeneration) {
+            $commands = [
+                'Eloquent' => 'migrate',
+                'Doctrine' => 'doctrine:schema:create',
+            ];
+
+            $this->runCommand('php artisan ' . $commands[ $this->getORM() ]);
+        }
     }
 
     /**

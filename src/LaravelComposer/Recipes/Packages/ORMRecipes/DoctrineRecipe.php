@@ -58,13 +58,12 @@ class DoctrineRecipe extends AbstractRecipe
      */
     private function handleV5(Composer $composer)
     {
-        mkdir('app/Entities', 0755);
-
         $composer->addDependency('mitchellvanw/laravel-doctrine', 'dev-develop');
 
+        mkdir('app/Entities', 0755);
         $configPath = $composer->getConfigDir();
         $this->addDoctrineConfig($configPath, 'app/Entities/');
-        $this->changeAuthConfig($configPath, 'mynewapp\\User', 'mynewapp\\Entities\\User');
+        $this->changeAuthConfig($configPath, $composer->getAppName() . '\\User', $composer->getAppName() . '\\Entities\\User');
 
         unlink('app/User.php');
         copy($composer->stub('Doctrine/Entity'), 'app/Entities/Entity.php');

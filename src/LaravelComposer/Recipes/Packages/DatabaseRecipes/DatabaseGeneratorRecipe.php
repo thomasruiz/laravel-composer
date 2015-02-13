@@ -7,14 +7,6 @@ class DatabaseGeneratorRecipe extends AbstractRecipe
 {
 
     /**
-     * @var array
-     */
-    private $commands = [
-        'Eloquent' => 'migrate',
-        'Doctrine' => 'doctrine:schema:create',
-    ];
-
-    /**
      * Run the recipe.
      *
      * @return string|bool
@@ -35,7 +27,8 @@ class DatabaseGeneratorRecipe extends AbstractRecipe
     public function handle(Composer $composer, $result)
     {
         if ($result) {
-            $composer->runCommand('php artisan ' . $this->commands[ $composer->getORM() ]);
+            $composer->allowDatabaseMigration();
+            $composer->migrateDatabase();
         }
 
         return true;

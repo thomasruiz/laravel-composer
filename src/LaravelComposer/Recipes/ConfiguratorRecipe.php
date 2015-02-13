@@ -1,6 +1,7 @@
 <?php namespace LaravelComposer\Recipes;
 
 use LaravelComposer\Composer;
+use LaravelComposer\Recipes\Packages\CashierRecipe;
 use LaravelComposer\Recipes\Packages\DatabaseRecipe;
 use LaravelComposer\Recipes\Packages\HTMLRecipe;
 use LaravelComposer\Recipes\Packages\ORMRecipe;
@@ -35,6 +36,8 @@ class ConfiguratorRecipe extends AbstractRecipe
             if ($composer->getLaravelVersion()[0] !== '4') {
                 $composer->addRecipe(new HTMLRecipe($this->helper, $this->input, $this->output));
             }
+
+            $composer->addRecipe(new CashierRecipe($this->helper, $this->input, $this->output));
 
             return true;
         }
