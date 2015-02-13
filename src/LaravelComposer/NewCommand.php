@@ -39,5 +39,7 @@ class NewCommand extends Command
 
         $composer->setAppName($input->getArgument('appName'));
         $composer->run();
+
+        $output->writeln("<info>Your application is now ready to use!</info>");
     }
 }
