@@ -3,8 +3,8 @@
     "description": "A laravel project generator",
     "license": "MIT",
     "require": {
-        "symfony/console": "~2.7",
-        "symfony/process": "~2.7"
+        "symfony/console": "~2.6",
+        "symfony/process": "~2.6"
     },
     "authors": [
         {
@@ -12,7 +12,6 @@
             "email": "contact@thomasruiz.eu"
         }
     ],
-    "minimum-stability": "dev",
     "bin": [
         "laravel-composer"
     ],
