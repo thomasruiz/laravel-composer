@@ -52,13 +52,13 @@ USES;
                 $implements = 'implements BillableContract, ';
             }
 
-            $userModel  = file_get_contents($file);
-            $traits     = '\1use Billable, ';
-            $properties = "    protected \$dates = ['trial_ends_at', 'subscription_ends_at'];";
+            $userModel = file_get_contents($file);
+            $traits    = '\1use Billable, ';
 
             if ($composer->getORM() === 'Eloquent') {
-                $traitUse = $composer->getLaravelVersion()[0] === '4' ? 'Trait as Billable' : '';
-                $uses     = "use Laravel\\Cashier\\Billable$traitUse;\n$uses";
+                $properties = "    protected \$dates = ['trial_ends_at', 'subscription_ends_at'];";
+                $traitUse   = $composer->getLaravelVersion()[0] === '4' ? 'Trait as Billable' : '';
+                $uses       = "use Laravel\\Cashier\\Billable$traitUse;\n$uses";
                 $composer->runCommand('php artisan cashier:table users');
                 $userModel = str_replace('}', "{$properties}\n}", $userModel);
             } else {
