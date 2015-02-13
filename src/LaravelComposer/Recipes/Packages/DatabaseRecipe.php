@@ -3,6 +3,7 @@
 use LaravelComposer\Composer;
 use LaravelComposer\Recipes\AbstractRecipe;
 use LaravelComposer\Recipes\Packages\DatabaseRecipes\DatabaseConfiguratorRecipe;
+use LaravelComposer\Recipes\Packages\DatabaseRecipes\DatabaseGeneratorRecipe;
 
 class DatabaseRecipe extends AbstractRecipe
 {
@@ -29,6 +30,7 @@ class DatabaseRecipe extends AbstractRecipe
     {
         if ($result) {
             $composer->addRecipe(new DatabaseConfiguratorRecipe($this->helper, $this->input, $this->output));
+            $composer->addRecipe(new DatabaseGeneratorRecipe($this->helper, $this->input, $this->output));
         }
 
         return true;

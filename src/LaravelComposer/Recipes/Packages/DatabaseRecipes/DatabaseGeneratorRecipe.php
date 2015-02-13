@@ -1,10 +1,18 @@
-<?php namespace LaravelComposer\Recipes\Packages;
+<?php namespace LaravelComposer\Recipes\Packages\DatabaseRecipes;
 
 use LaravelComposer\Composer;
 use LaravelComposer\Recipes\AbstractRecipe;
 
-class ORMRecipe extends AbstractRecipe
+class DatabaseGeneratorRecipe extends AbstractRecipe
 {
+
+    /**
+     * @var array
+     */
+    private $commands = [
+        'Eloquent' => 'migrate',
+        'Doctrine' => 'doctrine:schema:create',
+    ];
 
     /**
      * Run the recipe.
@@ -13,7 +21,7 @@ class ORMRecipe extends AbstractRecipe
      */
     public function run()
     {
-        return $this->ask('Which ORM would you like to use? [default: Eloquent]', [ 'Eloquent', 'Doctrine' ], 0);
+        return $this->ask("Do you want to generate the default database now? (y/N) ", false);
     }
 
     /**
@@ -26,12 +34,9 @@ class ORMRecipe extends AbstractRecipe
      */
     public function handle(Composer $composer, $result)
     {
-        if ($result !== 'Eloquent') {
-            $class = '\LaravelComposer\Recipes\Packages\ORMRecipes\\' . $result . 'Recipe';
-            $composer->addRecipe(new $class($this->helper, $this->input, $this->output));
+        if ($result) {
+            $composer->runCommand('php artisan ' . $this->commands[ $composer->getORM() ]);
         }
-
-        $composer->setORM($result);
 
         return true;
     }

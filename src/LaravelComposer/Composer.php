@@ -30,6 +30,11 @@ class Composer
     private $appName;
 
     /**
+     * @var string
+     */
+    private $ORM;
+
+    /**
      * Construct a new Composer object
      *
      * @param InputInterface  $input
@@ -244,5 +249,21 @@ class Composer
     public function setAppName($appName)
     {
         $this->appName = $appName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getORM()
+    {
+        return $this->ORM;
+    }
+
+    /**
+     * @param string $ORM
+     */
+    public function setORM($ORM)
+    {
+        $this->ORM = $ORM;
     }
 }
