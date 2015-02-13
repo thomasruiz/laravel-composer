@@ -1,13 +1,13 @@
-<?php namespace LaravelComposer\Receipes\Packages\ORMReceipes;
+<?php namespace LaravelComposer\Recipes\Packages\ORMRecipes;
 
 use LaravelComposer\Composer;
-use LaravelComposer\Receipes\AbstractReceipe;
+use LaravelComposer\Recipes\AbstractRecipe;
 
-class DoctrineReceipe extends AbstractReceipe
+class DoctrineRecipe extends AbstractRecipe
 {
 
     /**
-     * Run the receipe.
+     * Run the recipe.
      *
      * @return string|bool
      */

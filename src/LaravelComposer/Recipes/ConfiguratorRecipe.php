@@ -1,14 +1,14 @@
-<?php namespace LaravelComposer\Receipes;
+<?php namespace LaravelComposer\Recipes;
 
 use LaravelComposer\Composer;
-use LaravelComposer\Receipes\Packages\DatabaseReceipe;
-use LaravelComposer\Receipes\Packages\ORMReceipe;
+use LaravelComposer\Recipes\Packages\DatabaseRecipe;
+use LaravelComposer\Recipes\Packages\ORMRecipe;
 
-class ConfiguratorReceipe extends AbstractReceipe
+class ConfiguratorRecipe extends AbstractRecipe
 {
 
     /**
-     * Run the receipe.
+     * Run the recipe.
      *
      * @return string|bool
      */
@@ -28,8 +28,8 @@ class ConfiguratorReceipe extends AbstractReceipe
     public function handle(Composer $composer, $result)
     {
         if ($result) {
-            $composer->addReceipe(new ORMReceipe($this->helper, $this->input, $this->output));
-            $composer->addReceipe(new DatabaseReceipe($this->helper, $this->input, $this->output));
+            $composer->addRecipe(new ORMRecipe($this->helper, $this->input, $this->output));
+            $composer->addRecipe(new DatabaseRecipe($this->helper, $this->input, $this->output));
 
             return true;
         }

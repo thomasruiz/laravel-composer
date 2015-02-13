@@ -1,12 +1,12 @@
-<?php namespace LaravelComposer\Receipes;
+<?php namespace LaravelComposer\Recipes;
 
 use LaravelComposer\Composer;
 
-class VersionReceipe extends AbstractReceipe
+class VersionRecipe extends AbstractRecipe
 {
 
     /**
-     * Run the receipe.
+     * Run the recipe.
      *
      * @return string|bool
      */

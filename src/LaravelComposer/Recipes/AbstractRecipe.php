@@ -1,4 +1,4 @@
-<?php namespace LaravelComposer\Receipes;
+<?php namespace LaravelComposer\Recipes;
 
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -7,7 +7,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
-abstract class AbstractReceipe implements Receipe
+abstract class AbstractRecipe implements Recipe
 {
 
     /**
@@ -26,7 +26,7 @@ abstract class AbstractReceipe implements Receipe
     protected $helper;
 
     /**
-     * Construct a new VersionReceipe object
+     * Construct a new VersionRecipe object
      *
      * @param QuestionHelper  $helper
      * @param InputInterface  $input

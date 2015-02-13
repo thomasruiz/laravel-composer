@@ -1,6 +1,6 @@
 <?php namespace LaravelComposer;
 
-use LaravelComposer\Receipes\Receipe;
+use LaravelComposer\Recipes\Recipe;
 use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,9 +10,9 @@ class Composer
 {
 
     /**
-     * @var Receipe[]
+     * @var Recipe[]
      */
-    private $receipes = [ ];
+    private $recipes = [ ];
 
     /**
      * @var string
@@ -22,7 +22,7 @@ class Composer
     /**
      * @var int
      */
-    private $currentReceipeOffset = 0;
+    private $currentRecipeOffset = 0;
 
     /**
      * @var string
@@ -42,7 +42,7 @@ class Composer
     }
 
     /**
-     * Run all receipes.
+     * Run all recipes.
      *
      * @param int $currentIndex
      *
@@ -52,23 +52,23 @@ class Composer
     {
         $nextIndex = $currentIndex + 1;
 
-        $this->currentReceipeOffset = $nextIndex;
+        $this->currentRecipeOffset = $nextIndex;
 
-        $result = $this->receipes[ $currentIndex ]->run($this->input, $this->output);
+        $result = $this->recipes[ $currentIndex ]->run($this->input, $this->output);
 
-        if ($this->receipes[ $currentIndex ]->handle($this, $result) === true) {
-            isset( $this->receipes[ $nextIndex ] ) && $this->run($nextIndex);
+        if ($this->recipes[ $currentIndex ]->handle($this, $result) === true) {
+            isset( $this->recipes[ $nextIndex ] ) && $this->run($nextIndex);
         }
     }
 
     /**
-     * Add a receipe.
+     * Add a recipe.
      *
-     * @param Receipe $receipe
+     * @param Recipe $recipe
      */
-    public function addReceipe(Receipe $receipe)
+    public function addRecipe(Recipe $recipe)
     {
-        array_splice($this->receipes, $this->currentReceipeOffset++, 0, [ $receipe ]);
+        array_splice($this->recipes, $this->currentRecipeOffset++, 0, [ $recipe ]);
     }
 
     /**

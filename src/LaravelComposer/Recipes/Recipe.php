@@ -1,12 +1,12 @@
-<?php namespace LaravelComposer\Receipes;
+<?php namespace LaravelComposer\Recipes;
 
 use LaravelComposer\Composer;
 
-interface Receipe
+interface Recipe
 {
 
     /**
-     * Run the receipe.
+     * Run the recipe.
      *
      * @return string|bool
      */

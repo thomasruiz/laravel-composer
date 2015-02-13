@@ -1,14 +1,14 @@
-<?php namespace LaravelComposer\Receipes\Packages;
+<?php namespace LaravelComposer\Recipes\Packages;
 
 use LaravelComposer\Composer;
-use LaravelComposer\Receipes\AbstractReceipe;
-use LaravelComposer\Receipes\Packages\DatabaseReceipes\DatabaseConfiguratorReceipe;
+use LaravelComposer\Recipes\AbstractRecipe;
+use LaravelComposer\Recipes\Packages\DatabaseRecipes\DatabaseConfiguratorRecipe;
 
-class DatabaseReceipe extends AbstractReceipe
+class DatabaseRecipe extends AbstractRecipe
 {
 
     /**
-     * Run the receipe.
+     * Run the recipe.
      *
      * @return string|bool
      */
@@ -28,7 +28,7 @@ class DatabaseReceipe extends AbstractReceipe
     public function handle(Composer $composer, $result)
     {
         if ($result) {
-            $composer->addReceipe(new DatabaseConfiguratorReceipe($this->helper, $this->input, $this->output));
+            $composer->addRecipe(new DatabaseConfiguratorRecipe($this->helper, $this->input, $this->output));
         }
 
         return true;

@@ -1,13 +1,13 @@
-<?php namespace LaravelComposer\Receipes\Packages\DatabaseReceipes;
+<?php namespace LaravelComposer\Recipes\Packages\DatabaseRecipes;
 
 use LaravelComposer\Composer;
-use LaravelComposer\Receipes\AbstractReceipe;
+use LaravelComposer\Recipes\AbstractRecipe;
 
-class DatabaseConfiguratorReceipe extends AbstractReceipe
+class DatabaseConfiguratorRecipe extends AbstractRecipe
 {
 
     /**
-     * Run the receipe.
+     * Run the recipe.
      *
      * @return string|bool
      */

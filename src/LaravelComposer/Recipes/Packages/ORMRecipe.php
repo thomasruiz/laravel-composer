@@ -1,13 +1,13 @@
-<?php namespace LaravelComposer\Receipes\Packages;
+<?php namespace LaravelComposer\Recipes\Packages;
 
 use LaravelComposer\Composer;
-use LaravelComposer\Receipes\AbstractReceipe;
+use LaravelComposer\Recipes\AbstractRecipe;
 
-class ORMReceipe extends AbstractReceipe
+class ORMRecipe extends AbstractRecipe
 {
 
     /**
-     * Run the receipe.
+     * Run the recipe.
      *
      * @return string|bool
      */
@@ -27,8 +27,8 @@ class ORMReceipe extends AbstractReceipe
     public function handle(Composer $composer, $result)
     {
         if ($result !== 'Eloquent') {
-            $class = '\LaravelComposer\Receipes\Packages\ORMReceipes\\' . $result . 'Receipe';
-            $composer->addReceipe(new $class($this->helper, $this->input, $this->output));
+            $class = '\LaravelComposer\Recipes\Packages\ORMRecipes\\' . $result . 'Recipe';
+            $composer->addRecipe(new $class($this->helper, $this->input, $this->output));
         }
 
         return true;

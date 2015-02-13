@@ -1,7 +1,7 @@
 <?php namespace LaravelComposer;
 
-use LaravelComposer\Receipes\ConfiguratorReceipe;
-use LaravelComposer\Receipes\VersionReceipe;
+use LaravelComposer\Recipes\ConfiguratorRecipe;
+use LaravelComposer\Recipes\VersionRecipe;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,8 +34,8 @@ class NewCommand extends Command
         $composer = new Composer($input, $output);
 
         $questionHelper = $this->getHelper('question');
-        $composer->addReceipe(new VersionReceipe($questionHelper, $input, $output));
-        $composer->addReceipe(new ConfiguratorReceipe($questionHelper, $input, $output));
+        $composer->addRecipe(new VersionRecipe($questionHelper, $input, $output));
+        $composer->addRecipe(new ConfiguratorRecipe($questionHelper, $input, $output));
 
         $composer->setAppName($input->getArgument('appName'));
         $composer->run();
