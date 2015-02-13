@@ -33,6 +33,8 @@ class NewCommand extends Command
     {
         $composer = new Composer($input, $output);
 
+        $composer->setAnsi  ($output->isDecorated());
+
         $questionHelper = $this->getHelper('question');
         $composer->addRecipe(new VersionRecipe($questionHelper, $input, $output));
         $composer->addRecipe(new ConfiguratorRecipe($questionHelper, $input, $output));

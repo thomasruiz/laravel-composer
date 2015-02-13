@@ -40,6 +40,11 @@ class Composer
     private $databaseGeneration = false;
 
     /**
+     * @var string
+     */
+    private $ansi;
+
+    /**
      * Construct a new Composer object
      *
      * @param InputInterface  $input
@@ -145,7 +150,7 @@ class Composer
     {
         $this->info("Running $command...");
 
-        $process = new Process($command);
+        $process = new Process($command . ' ' . $this->ansi);
 
         $process->setTimeout($timeout);
 
@@ -293,5 +298,13 @@ class Composer
     public function setORM($ORM)
     {
         $this->ORM = $ORM;
+    }
+
+    /**
+     * @param bool $isDecorated
+     */
+    public function setAnsi($isDecorated)
+    {
+        $this->ansi = $isDecorated ? '--ansi' : '--no-ansi';
     }
 }
